@@ -42,7 +42,14 @@ app.post('/interactions', verifyKeyMiddleware(PUBLIC_KEY), async (req, res) => {
         },
       });
     }
-
+if(interaction.data.name == 'hi'){
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: `Hey ${interaction.member.user.username}! Seems to be working`,
+        },
+      });
+    }
     if(interaction.data.name == 'dm'){
       // https://discord.com/developers/docs/resources/user#create-dm
       let c = (await discord_api.post(`/users/@me/channels`,{
@@ -80,6 +87,11 @@ app.get('/register_commands', async (req,res) =>{
       "options": []
     },
     {
+      "name": "hi",
+      "description": "its not low!",
+      "options": []
+    },
+	{
       "name": "dm",
       "description": "sends user a DM",
       "options": []
